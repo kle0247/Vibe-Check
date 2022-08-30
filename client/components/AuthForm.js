@@ -26,6 +26,9 @@ const AuthForm = props => {
         <div>
           <button type="submit">{displayName}</button>
         </div>
+        <div>
+          <a href='/auth/spotify'>Login via Spotify</a>
+        </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
