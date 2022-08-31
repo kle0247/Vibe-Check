@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
+const { urlencoded } = require('express')
 const app = express()
 module.exports = app
 
@@ -9,6 +10,7 @@ app.use(morgan('dev'))
 
 // body parsing middleware
 app.use(express.json())
+app.use(express.urlencoded({extended: false }))
 
 // auth and api routes
 app.use('/auth', require('./auth'))

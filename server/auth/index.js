@@ -2,7 +2,9 @@ const env = require('../../env')
 const axios = require('axios');
 const router = require('express').Router()
 const { models: {User }} = require('../db');
-const { response } = require('express');
+const querystring = require('querystring');
+const request = require('request');
+
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -34,6 +36,8 @@ router.get('/me', async (req, res, next) => {
     next(ex)
   }
 })
+
+/* spotify api */
 const redirect_uri = 'http://localhost:8080/auth/spotify/callback'
 const scope = 'streaming user-read-email user-read-private user-read-currently-playing user-library-read user-read-playback-state'
 const state = `${Math.random()}`
@@ -44,39 +48,78 @@ router.get('/spotify', (req, res, next) => {
 
 router.get('/spotify/callback', async(req, res, next) => {
   try{
-    const code = req.query.code || null;
-    const state = req.query.code || null;
-
-    if(state === null){
-      res.redirect('/#' +
-        queryString.stringify({
-          error: 'state_mismatch'
-        }));
-    } else{
-      let response = await axios.post('https://accounts.spotify.com/api/token', {
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: redirect_uri
-        }, {
-        headers: {
+    let data = {
+      grant_type: 'authorization_code',
+      code: req.query.code,
+      redirect_uri: redirect_uri, 
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET
+    }
+    let headers = {
           'Accept': 'application/json',
-          'Authorization': 'Basic ' + (process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'), 
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Authorization': 'Basic ' + btoa(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'),
+          'Content-Type':'application/x-www-form-urlencoded'
+    }
+    let response = await axios.post('https://accounts.spotify.com/api/token', querystring.stringify(data), headers );
+    
+    const { error } = response.data;
+    if(error){
+      const ex = new Error(error);
+      ex.status = 401;
+      next(ex)
+    }
+    else{
+      const { access_token, refresh_token } = response.data;
+
+      response = await axios.get('https://api.spotify.com/v1/me', {
+        headers: 
+        { 
+          'Authorization': 'Bearer ' + access_token 
         }
-       }
-      )
-      const  { error, access_token } = response.data;
-      if(err){
-          const ex = new Error(err);
-          ex.status = 401;
-          next(ex)
+      }); 
+
+      const { email, id, username } = response.data;
+
+      const loginIdx = email.search('@');
+      const login = email.slice(0, loginIdx);
+
+      let user = await User.findOne({
+        where: {
+          spotifyId: id
+        }}); 
+      
+      if(!user){
+        user = await User.create({
+          username: login, 
+          spotifyId: id, 
+          password: Math.random().toString()
+        })
       }
-      else{
-        res.send(response.data)
-      }
+      const token = require('jsonwebtoken').sign({ id: user.id }, process.env.JWT)
+      res.send(`
+        <html>
+          <head>
+            <script>
+              window.localStorage.setItem('token', '${token}');
+              window.location = '/';
+            </script>
+          </head>
+          <body>
+          ...Signing in
+          </body>
+        </html>
+      `)
     }
   }
   catch(ex){
     next(ex)
   }
-})
+});
+
+router.get('/spotify/token', (req, res, next) => {
+  res.json(
+    {
+    access_token: req.query.access_token
+    }
+  )
+});

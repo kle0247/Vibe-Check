@@ -16,13 +16,14 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
-    "sequelize": "^6.21.4",
-    "axios": "^0.27.2"
+    "request": "^2.88.2",
+    "sequelize": "^6.21.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
