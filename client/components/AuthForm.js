@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {connect} from 'react-redux'
 import {authenticate} from '../store'
+import axios from 'axios'
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
+function AuthForm(props){
   const {name, displayName, handleSubmit, error} = props
-
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -32,8 +32,7 @@ const AuthForm = props => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
-  )
-}
+  )}
 
 /**
  * CONTAINER

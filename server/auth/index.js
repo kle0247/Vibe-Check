@@ -60,9 +60,11 @@ router.get('/spotify/callback', async(req, res, next) => {
           'Authorization': 'Basic ' + btoa(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'),
           'Content-Type':'application/x-www-form-urlencoded'
     }
+    // get access token
     let response = await axios.post('https://accounts.spotify.com/api/token', querystring.stringify(data), headers );
-    
+
     const { error } = response.data;
+
     if(error){
       const ex = new Error(error);
       ex.status = 401;
@@ -70,15 +72,16 @@ router.get('/spotify/callback', async(req, res, next) => {
     }
     else{
       const { access_token, refresh_token } = response.data;
-
+      process.env.ACCESS_TOKEN = access_token;
+      console.log('here', process.env.ACCESS_TOKEN)
       response = await axios.get('https://api.spotify.com/v1/me', {
         headers: 
         { 
           'Authorization': 'Bearer ' + access_token 
-        }
+        } 
       }); 
 
-      const { email, id, username } = response.data;
+      const { email, id } = response.data;
 
       const loginIdx = email.search('@');
       const login = email.slice(0, loginIdx);
@@ -94,7 +97,8 @@ router.get('/spotify/callback', async(req, res, next) => {
           spotifyId: id, 
           password: Math.random().toString()
         })
-      }
+      }; 
+
       const token = require('jsonwebtoken').sign({ id: user.id }, process.env.JWT)
       res.send(`
         <html>
@@ -116,10 +120,26 @@ router.get('/spotify/callback', async(req, res, next) => {
   }
 });
 
-router.get('/spotify/token', (req, res, next) => {
-  res.json(
-    {
-    access_token: req.query.access_token
+router.get('/spotify/refresh', async(req, res, next) => {
+  try{
+    const refresh_token = req.query.refresh_token;
+    console.log(refresh_token)
+    let data = {
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token,
+      redirect_uri: redirect_uri, 
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET
     }
-  )
-});
+    let headers = {
+          'Accept': 'application/json',
+          'Authorization': 'Basic ' + btoa(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'),
+          'Content-Type':'application/x-www-form-urlencoded'
+    }
+    let response = await axios.post('https://accounts.spotify.com/api/token', querystring.stringify(data), headers );
+    console.log(response.data)
+  }
+  catch(ex){
+    next(ex)
+  }
+})
