@@ -39,11 +39,12 @@ export const authenticate = (username, password, method) => async dispatch => {
 }
 
 export const logout = () => {
-  window.localStorage.removeItem(TOKEN)
-  history.push('/login')
-  return {
-    type: SET_AUTH,
-    auth: {}
+  return (dispatch) => {
+    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('access_token')
+    window.localStorage.removeItem('refresh_token')
+    dispatch({ type: SET_AUTH, auth: {}})
+    history.push('/login')
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {SpotifyPlayer} from './SpotifyPlayer';
+import { Route } from 'react-router-dom'
+import Spotify from './Spotify';
 
 /**
  * COMPONENT
@@ -11,7 +12,7 @@ export const Home = props => {
   return (
     <div>
       <h3>Welcome, {username}</h3>
-      <SpotifyPlayer />
+      <Spotify/>
     </div>
   )
 }

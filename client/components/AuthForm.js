@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {authenticate} from '../store'
 import axios from 'axios'
@@ -6,7 +6,7 @@ import axios from 'axios'
 /**
  * COMPONENT
  */
-function AuthForm(props){
+const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
   return (
     <div>

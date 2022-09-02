@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import SpotifyPlayer from 'react-spotify-web-playback';
 
-export const SpotifyPlayer = () =>{
-    const player = window.onSpotifyWebPlaybackSDKReady = () => {
-        const token = '[My access token]';
-        const player = new Spotify.Player({
-          name: 'Web Playback SDK Quick Start Player',
-          getOAuthToken: cb => { cb(token); },
-          volume: 0.5
-        });
+
+const Player = ({ access_token, trackURI }) => {
     return(
-        <div>
-            <script src="https://sdk.scdn.co/spotify-player.js"></script> 
-            <script>
-                {player()}    
-            </script>              
-        </div>
-    )}
+        <SpotifyPlayer 
+            token={ access_token }
+            uris = { trackURI }
+            styles={{
+                activeColor: '#fff',
+                bgColor: 'black',
+                color: '#fff',
+                loaderColor: '#fff',
+                sliderColor: '#1cb954',
+                trackArtistColor: '#ccc',
+                trackNameColor: '#fff',
+              }}
+        />
+    )
 }
+
+export default Player;

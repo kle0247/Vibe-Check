@@ -62,10 +62,6 @@ User.findByToken = async function(token) {
   }
 }
 
-User.setAPIToken = function(tokens){
-    let tokensObj = {tokens}
-    return tokensObj
-}
 
 /**
  * hooks
