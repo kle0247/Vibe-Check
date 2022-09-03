@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback';
 
 
 const Player = ({ access_token, trackURI }) => {
+
     return(
         <SpotifyPlayer 
             token={ access_token }
