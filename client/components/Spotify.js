@@ -3,9 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Player from './SpotifyPlayer';
 import { fetchTracks } from '../store/tracks';
+import { analyzeTrack } from '../store/track';
 import Canvas from './Canvas';
-
-// import Visualize from './Wave';
 
 
 class Spotify extends React.Component{
@@ -17,27 +16,28 @@ class Spotify extends React.Component{
         }
         this.getTracks = this.getTracks.bind(this)
         this.handleClick = this.handleClick.bind(this)
-        this.handleVisualize = this.handleVisualize.bind(this)
-
+        this.analyzeTrack = this.analyzeTrack.bind(this)
+        this.canvasRef = React.createRef()
     };
     
-    componentDidMount(){
-        this.props.getTracks
-    };
     async getTracks(){
         await this.props.getTracks()
     };
     handleClick(ev){
         this.setState({ playingTrack: ev.target.value })
     };
-    handleVisualize(ev){
-        this.setState({ externalUrl: ev.target.value })
-    } ;
+
+    async analyzeTrack(ev){
+        const id = ev.target.value 
+        await this.props.analyzeTrack(id)
+    }
+
     render(){
-        const { getTracks, handleClick, handleVisualize } = this;
-        const { playingTrack, externalUrl } = this.state
+        const { getTracks, handleClick, analyzeTrack} = this;
+        const { playingTrack } = this.state
         const { tracks } = this.props;
-        const access_token = window.localStorage.getItem('access_token')
+        const access_token = window.localStorage.getItem('access_token');
+
 
         return(
             <div>
@@ -48,13 +48,12 @@ class Spotify extends React.Component{
                         return(
                             <div key={track.id}>
                                 <button key={track.track.uri} onClick={handleClick} value={track.track.uri} >{ track.track.name }</button>
-                                <button key={track.track.id} onClick={handleVisualize} value={track.track.external_urls.spotify}>Visualize</button>
+                                <button key={track.track.id} onClick={analyzeTrack} value={track.track.id}>Analyze</button>
                             </div>
                         )
                     })
                 }
-                <Canvas />
-                {/* <Visualize trackURL = { externalUrl } /> */}
+                <Canvas canvasRef={this.canvasRef}/>
             </div>
         )
     }
@@ -62,14 +61,15 @@ class Spotify extends React.Component{
 
 const mapState = ( state ) => {
     return{
-        tracks: state.tracks
+        tracks: state.tracks,
+        track: state.track
     }
 };
 
 const mapDispatch = (dispatch) => {
     return {
-        getTracks: () => dispatch(fetchTracks())
-        // playTrack: () => dispatch(playTrack(track))
+        getTracks: () => dispatch(fetchTracks()),
+        analyzeTrack: (id) => dispatch(analyzeTrack(id))
     }
 };
 

@@ -3,8 +3,9 @@ import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import auth from './auth'
 import tracks from './tracks'
+import track from './track'
 
-const reducer = combineReducers({ auth, tracks })
+const reducer = combineReducers({ auth, tracks, track })
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)
 

@@ -5,7 +5,7 @@ const tracks = ( state = [], action ) => {
         return ( action.tracks ? action.tracks : null )
     }
     return state
-}
+};
 
 export const fetchTracks = () => {
     return async(dispatch) => {
@@ -17,6 +17,7 @@ export const fetchTracks = () => {
         })).data.items
         dispatch({type: 'SET_TRACKS', tracks})
     }
-}
+};
 
-export default tracks;
+
+export default tracks
