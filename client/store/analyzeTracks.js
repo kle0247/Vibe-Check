@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const analyzeTracks = (state = [], action) => {
+const analyzedTracks = (state = [], action) => {
     if(action.type === 'ANALYZE_TRACKS'){
         return action.tracks 
     }
@@ -15,10 +15,9 @@ export const analyzeAllTracks = (tracksList) => {
             headers: {
                 'Authorization': 'Bearer ' + access_token 
             }
-        })).data
-        console.log(tracks)
+        })).data.audio_features
         dispatch({type: 'ANALYZE_TRACKS', tracks})
     }
 };
 
-export default analyzeTracks;
+export default analyzedTracks;
