@@ -38,7 +38,7 @@ router.get('/me', async (req, res, next) => {
 
 /* spotify api */
 const redirect_uri = 'http://localhost:8080/auth/spotify/callback'
-const scope = 'streaming user-read-email user-read-private user-read-currently-playing user-read-recently-played  user-library-read user-read-playback-state'
+const scope = 'streaming user-read-email user-read-private user-read-currently-playing user-read-recently-played  user-library-read user-read-playback-state user-top-read'
 const state = `${Math.random()}`
 
 router.get('/spotify', (req, res, next) => {

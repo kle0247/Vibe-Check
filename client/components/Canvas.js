@@ -2,36 +2,54 @@ import { createCanvas } from 'canvas';
 import React from 'react';
 
 
-
 class Canvas extends React.Component{
-    constructor(){
+    constructor(props){
         super()
-        this.setState = {
-            radius: 0
-        }
         this.canvasRef = React.createRef()
         this.setCanvas = this.setCanvas.bind(this)
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.track.length === 0 && this.props.track.length > 0){
+            this.setCanvas()
+        }
     }
     componentDidMount(){
         this.setCanvas()
     }
     setCanvas(){
         let canvas = createCanvas()
-        const { canvasRef } = this.props
+        const { canvasRef, track } = this.props
         canvas = canvasRef.current
-        const ctx = canvas.getContext('2d')
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-        const radius = 70;
 
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        ctx.stroke();
+        const ctx = canvas.getContext('2d');
+        const data = track
+        
+        
     };
-    
+
+    draw(ctx, data){
+        const space = ctx.canvas.width / data.length
+        const loudness = data.map( _data => Math.abs(_data.loudness))
+
+        loudness.forEach( (_data, i) => {
+            const startPoint = _data.start+1
+            const duration = _data.duration
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);   
+
+            ctx.beginPath();
+            ctx.moveTo(space*i, 0) //start at  0,0
+            ctx.lineTo(space*i, _data); //y would be the loudness of the song 
+            ctx.fillStyle = 'black';
+            ctx.stroke();
+            ctx.fillStyle = 'white';
+            ctx.fillStyle = 'black';
+        })
+    }
+
     render(){
-        const { canvasRef } = this.props
-        // console.log(audioRef)
+        const { canvasRef, track } = this.props
+
         return(
             <div>
                 <canvas 

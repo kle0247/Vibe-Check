@@ -11,12 +11,11 @@ const track = ( state = [], action ) => {
 export const analyzeTrack = (id) => {
     return async(dispatch) => {
         const access_token = window.localStorage.getItem('access_token')
-        const track = (await axios.get(`https://api.spotify.com/v1/audio-analysis/${id}`, {
+        const track = (await axios.get(`https://api.spotify.com/v1/audio-features/${id}`, {
             headers: {
                 'Authorization': 'Bearer ' + access_token 
             }
-        })).data
-        console.log(track)
+        })).data.segments
         dispatch({type: 'GET_TRACK', track})
     }   
 }
