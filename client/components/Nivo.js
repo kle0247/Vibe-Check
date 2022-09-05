@@ -24,12 +24,13 @@ const Bar = ({tracksFeatures}) => {
             'valence',
             'instrumentalness'
         ]}
+        enableLabel={false}
         indexBy="id"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.2}
         // groupMode={'grouped'}
         width={700}
-        height={700}
+        height={500}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
         colors={{ scheme: 'nivo' }}
@@ -78,14 +79,7 @@ const Bar = ({tracksFeatures}) => {
         }}
         axisTop={null}
         axisRight={null}
-        axisBottom={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: 'tracks',
-            legendPosition: 'middle',
-            legendOffset: 32
-        }}
+        axisBottom={null}
         axisLeft={{
             tickSize: 5,
             tickPadding: 5,

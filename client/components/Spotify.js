@@ -7,6 +7,7 @@ import { fetchTopTracks } from '../store/topTracks';
 import { analyzeTrack } from '../store/track';
 import { analyzeAllTracks } from '../store/analyzeTracks';
 import Bar from './Nivo'
+import Radar from './Radar'
 
 class Spotify extends React.Component{
     constructor(){
@@ -56,15 +57,16 @@ class Spotify extends React.Component{
         const { tracks, track, topTracks, analyzedTracks } = this.props;
         const access_token = window.localStorage.getItem('access_token');
         return(
-            <div id='container'>
+            <main>
                 <Player access_token={access_token} trackURI = { playingTrack  }  />
 
                 <button onClick={ getTracks }>Recent Tracks</button>
                 <button onClick={ getTopTracks }>Top Tracks</button>
+                <div id='container' style={{'height': 1000}}>
                 { 
                     recentTracks ? 
 
-                    <div>
+                    <div className='tracks'>
                     {
                         tracks.map( track => {
                             return(
@@ -80,7 +82,7 @@ class Spotify extends React.Component{
                 {   
                     top ? 
                     
-                    <div>
+                    <div className='tracks'>
                     {
                         topTracks.map( track => {
                             return(
@@ -92,10 +94,23 @@ class Spotify extends React.Component{
                     }
                     </div> : null
                 }
-                <div style={{'height': 1000}}>
-                    <Bar tracksFeatures={analyzedTracks} /> 
+                {/* <div id='charts' style={{'height': 1000}}> */}
+                {
+                    !analyzedTracks.length ? null : 
+                    
+                    // <div id='bar' style={{'height': 1000}}>
+                        <Bar tracksFeatures={analyzedTracks} /> 
+                    // </div>
+                }
+                {    
+                    !track.length ? null :
+                    // <div style={{'height': 1000}}>
+                        <Radar trackFeatures={track}/>
+                    // </div>
+                }
+                {/* </div> */}
                 </div>
-            </div>
+            </main>
         )
     }
 };

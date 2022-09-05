@@ -2,11 +2,11 @@ import axios from 'axios'
 
 const track = ( state = [], action ) => {
     if(action.type === 'GET_TRACK'){
-        return ( action.track ? action.track : null )
+        return [action.track]
+        // ( action.track ? action.track : null )
     }
     return state
 };
-
 
 export const analyzeTrack = (id) => {
     return async(dispatch) => {
@@ -15,7 +15,7 @@ export const analyzeTrack = (id) => {
             headers: {
                 'Authorization': 'Bearer ' + access_token 
             }
-        })).data.segments
+        })).data
         dispatch({type: 'GET_TRACK', track})
     }   
 }
