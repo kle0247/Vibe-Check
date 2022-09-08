@@ -6,20 +6,24 @@ const Radar = ({trackFeatures}) => {
     trackFeatures.map( track => {
         data.push(
             {
-                features: 'danceability',
-                feature_value: track.danceability
+                keys: 'danceability',
+                features: track.danceability
             },
             {
-                features: 'energy',
-                feature_value: track.energy
+                keys: 'energy',
+                features: track.energy
             },
             {
-                features: 'valence',
-                feature_value: track.valence
+                keys: 'valence',
+                features: track.valence
             },
             {
-                features: 'instrumentalness',
-                feature_value: track.instrumentalness
+                keys: 'instrumentalness',
+                features: track.instrumentalness
+            },
+            {
+                keys: 'acousticness',
+                features: track.acousticness
             }
         )
     })
@@ -27,10 +31,10 @@ const Radar = ({trackFeatures}) => {
     return(
         <ResponsiveRadar
             data={data}
-            keys={[ 'feature_value' ]}
-            indexBy="features"
+            keys={[ 'features' ]}
+            indexBy="keys"
             valueFormat=">-.2f"
-            margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
+            margin={{ top: 70, right: 100, bottom: 30, left: 150 }}
             borderColor={{ from: 'color' }}
             gridLabelOffset={36}
             dotSize={10}
@@ -39,7 +43,7 @@ const Radar = ({trackFeatures}) => {
             colors={{ scheme: 'nivo' }}
             blendMode="multiply"
             motionConfig="wobbly"
-            width={700}
+            width={500}
             height={500}
             legends={[
                 {

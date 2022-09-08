@@ -11,7 +11,7 @@ export const fetchTopTracks = () => {
     return async(dispatch) => {
         const access_token = window.localStorage.getItem('access_token')
         const tracks = (await axios.get(
-            "https://api.spotify.com/v1/me/top/tracks?limit=20", {
+            "https://api.spotify.com/v1/me/top/tracks?limit=50", {
             headers: {
                 'Authorization': 'Bearer ' + access_token 
             }

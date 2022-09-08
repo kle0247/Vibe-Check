@@ -16,6 +16,8 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@foobar404/wave": "^2.0.3",
     "@nivo/bar": "^0.79.1",
     "@nivo/core": "^0.79.0",

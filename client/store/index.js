@@ -6,8 +6,9 @@ import tracks from './tracks'
 import track from './track'
 import topTracks from './topTracks'
 import analyzedTracks from './analyzeTracks'
+import results from './search'
 
-const reducer = combineReducers({ auth, tracks, track, topTracks, analyzedTracks })
+const reducer = combineReducers({ auth, tracks, track, topTracks, analyzedTracks, results })
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)
 

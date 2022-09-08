@@ -10,8 +10,8 @@ const tracks = ( state = [], action ) => {
 export const fetchTracks = () => {
     return async(dispatch) => {
         const access_token = window.localStorage.getItem('access_token')
-        const tracks = (await axios.get(
-            "https://api.spotify.com/v1/me/player/recently-played?limit=20", {
+        let tracks = (await axios.get(
+            "https://api.spotify.com/v1/me/player/recently-played?limit=50", {
             headers: {
                 'Authorization': 'Bearer ' + access_token 
             }
@@ -19,6 +19,5 @@ export const fetchTracks = () => {
         dispatch({type: 'SET_TRACKS', tracks})
     }
 };
-
 
 export default tracks

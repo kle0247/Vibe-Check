@@ -20,17 +20,16 @@ form div {
   display: inline-block;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-}
+
 
 .tracks{
   display: flex;
   flex-direction: column;
-  width: 50%;
+  justify-content: flex-start;
+  /* width: 50%; */
+  /* flex-wrap: wrap; */
 }
 
-#container{
+#container{ 
   display: flex;
 }

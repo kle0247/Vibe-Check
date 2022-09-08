@@ -10,12 +10,12 @@ const Player = ({ access_token, trackURI }) => {
             uris = { trackURI }
             styles={{
                 activeColor: '#fff',
-                bgColor: 'black',
+                bgColor: '#333',
                 color: '#fff',
                 loaderColor: '#fff',
                 sliderColor: '#1cb954',
                 trackArtistColor: '#ccc',
-                trackNameColor: '#fff',
+                trackNameColor: '#fff'
               }}
         />
     )

@@ -5,11 +5,22 @@ import React from 'react';
 class Canvas extends React.Component{
     constructor(props){
         super()
+        this.state = {
+            xPosition: 55,
+            yPosition: 55,
+            fps: 30, //tempo
+            speed: 10, 
+            direction: 1,
+            layout: ''
+        }
         this.canvasRef = React.createRef()
         this.setCanvas = this.setCanvas.bind(this)
+        this.drawPositions= this.drawPositions.bind(this)
     }
     componentDidUpdate(prevProps){
-        if(prevProps.track.length === 0 && this.props.track.length > 0){
+        console.log(prevProps)
+        if(prevProps.tempo !== this.props.tempo) {
+            this.setState({ speed: this.props.tempo })
             this.setCanvas()
         }
     }
@@ -17,39 +28,49 @@ class Canvas extends React.Component{
         this.setCanvas()
     }
     setCanvas(){
-        let canvas = createCanvas()
-        const { canvasRef, track } = this.props
-        canvas = canvasRef.current
+        let canvas = createCanvas({width: 1000})
+        const { canvasRef } = this.props
+        canvas = canvasRef.current    
+        this.setState({ canvas: canvas })   
 
-        const ctx = canvas.getContext('2d');
-        const data = track
+        if(canvas.getContext){
+            let layout = canvas.getContext('2d');
+            this.setState({ layout: layout })
+            
+            const interval = setInterval( () => {
+                this.getPositions();
+                this.drawPositions();
+            }, 1000 / this.state.fps  );
         
-        
+            setTimeout(() => {
+                clearInterval(interval)
+            }, 6000)
+
+        }   
+
     };
+    
+    getPositions(){
+        if(this.state.xPosition >= this.state.layout.canvas.width){
+            this.state.direction = -1
+        } else if(this.state.xPosition <= 0) {
+            this.state.direction = 1
+        }
+        this.state.xPosition += this.state.direction === 1 ? this.state.speed : this.state.speed * -1;
+    }
 
-    draw(ctx, data){
-        const space = ctx.canvas.width / data.length
-        const loudness = data.map( _data => Math.abs(_data.loudness))
-
-        loudness.forEach( (_data, i) => {
-            const startPoint = _data.start+1
-            const duration = _data.duration
-
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);   
-
-            ctx.beginPath();
-            ctx.moveTo(space*i, 0) //start at  0,0
-            ctx.lineTo(space*i, _data); //y would be the loudness of the song 
-            ctx.fillStyle = 'black';
-            ctx.stroke();
-            ctx.fillStyle = 'white';
-            ctx.fillStyle = 'black';
-        })
+    drawPositions(){
+        const layout = this.state.layout
+        layout.fillStyle = 'white'
+        layout.fillRect(0, 0, layout.canvas.width, layout.canvas.width)
+        
+        layout.fillStyle = 'black'
+        layout.fillRect(this.state.xPosition, this.state.yPosition, 50, 50)
     }
 
     render(){
-        const { canvasRef, track } = this.props
-
+        const { canvasRef } = this.props
+        console.log(this.state.fps)
         return(
             <div>
                 <canvas 

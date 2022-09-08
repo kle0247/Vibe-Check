@@ -10,7 +10,8 @@ const Bar = ({tracksFeatures}) => {
           danceability: track.danceability, 
           energy: track.energy, 
           valence: track.valence,
-          instrumentalness: track.instrumentalness
+          instrumentalness: track.instrumentalness,
+          acousticness: track.acousticness
         })
         id++
   })
@@ -22,14 +23,15 @@ const Bar = ({tracksFeatures}) => {
             'danceability',
             'energy',
             'valence',
-            'instrumentalness'
+            'instrumentalness',
+            'acousticness'
         ]}
         enableLabel={false}
         indexBy="id"
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 140, bottom: 50, left: 80 }}
         padding={0.2}
         // groupMode={'grouped'}
-        width={700}
+        width={500}
         height={500}
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
@@ -54,20 +56,6 @@ const Bar = ({tracksFeatures}) => {
                 spacing: 10
             }
         ]}
-        // fill={[
-        //     {
-        //         match: {
-        //             id: 'fries'
-        //         },
-        //         id: 'dots'
-        //     },
-        //     {
-        //         match: {
-        //             id: 'sandwich'
-        //         },
-        //         id: 'lines'
-        //     }
-        // ]}
         borderColor={{
             from: 'color',
             modifiers: [
@@ -124,7 +112,6 @@ const Bar = ({tracksFeatures}) => {
             }
         ]}
         role="application"
-        ariaLabel="Nivo bar chart demo"
         barAriaLabel={function(e){return e.id+": "+e.formattedValue+" in country: "+e.indexValue}}
     />
   )
