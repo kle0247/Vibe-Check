@@ -35,12 +35,13 @@ const Radar = ({trackFeatures}) => {
             indexBy="keys"
             valueFormat=">-.2f"
             margin={{ top: 70, right: 100, bottom: 30, left: 150 }}
+            maxValue={1}
             borderColor={{ from: 'color' }}
             gridLabelOffset={36}
             dotSize={10}
             dotColor={{ theme: 'background' }}
             dotBorderWidth={2}
-            colors={{ scheme: 'nivo' }}
+            colors={{ scheme: 'accent' }}
             blendMode="multiply"
             motionConfig="wobbly"
             width={500}

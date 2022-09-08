@@ -7,7 +7,6 @@ import {me} from './store'
 import Spotify from './components/Spotify';
 import auth from './store/auth';
 import Player from './components/SpotifyPlayer'
-import Bar from './components/Nivo'
 
 /**
  * COMPONENT

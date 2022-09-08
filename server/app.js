@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
-const { urlencoded } = require('express')
 const app = express()
 const cors = require('cors')
 
@@ -23,7 +22,7 @@ app.use('/api', require('./api'))
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '..', 'public/index.html')));
 
 // static file-serving middleware
-app.use(express.static(path.join(__dirname, '..', 'public')))
+app.use(express.static('public'));
 
 // any remaining requests with an extension (.js, .css, etc.) send 404
 app.use((req, res, next) => {

@@ -12,7 +12,7 @@ export const Home = props => {
 
   return (
     <div>
-      <Typography style={{'textTransform': 'uppercase'}} component={'h3'}>Welcome, {username}</Typography>
+      <Typography style={{'textTransform': 'uppercase', 'marginLeft': '1.7rem'}} component={'h3'}>Welcome, {username}</Typography>
       <Spotify/>
     </div>
   )
