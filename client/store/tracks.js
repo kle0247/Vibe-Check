@@ -16,7 +16,8 @@ export const fetchTracks = () => {
                 'Authorization': 'Bearer ' + access_token 
             }
         })).data.items
-        tracks = tracks.map( _track => _track.track)
+        tracks = tracks.map( _track => _track.track).filter(_track => _track.id !== '2VEsmoek0sol9MnJFyoG9e' )
+
         dispatch({type: 'SET_TRACKS', tracks})
     }
 };

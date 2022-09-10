@@ -42,7 +42,7 @@ const scope = 'streaming user-read-email user-read-private user-read-currently-p
 const state = `${Math.random()}`
 
 router.get('/spotify', (req, res, next) => {
-  res.redirect(`https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${redirect_uri}&state=${state}&scope=${scope}`);
+  res.redirect(`https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=${redirect_uri}&show_dialog=true&state=${state}&scope=${scope}`);
 })
 
 router.get('/spotify/callback', async(req, res, next) => {

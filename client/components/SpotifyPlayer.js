@@ -8,9 +8,10 @@ const Player = ({ access_token, trackURI }) => {
         <SpotifyPlayer 
             token={ access_token }
             uris = { trackURI }
+            play={!!trackURI}
             styles={{
                 activeColor: '#fff',
-                bgColor: '#333',
+                bgColor: 'black',
                 color: '#fff',
                 loaderColor: '#fff',
                 sliderColor: '#1cb954',

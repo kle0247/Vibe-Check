@@ -112,7 +112,6 @@ const Bar = ({tracksFeatures}) => {
             }
         ]}
         role="application"
-        barAriaLabel={function(e){return e.id+": "+e.formattedValue+" in country: "+e.indexValue}}
     />
   )
 }

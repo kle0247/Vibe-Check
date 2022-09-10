@@ -1,9 +1,15 @@
+* {
+  margin: 0;
+}
+
 body {
   font-family: sans-serif;
+  background-color: #f8f9fa;
 }
 
 a {
   text-decoration: none;
+  color: #ffffff;
 }
 
 label {
@@ -17,19 +23,26 @@ nav a {
 
 form div {
   margin: 1em;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+
 }
 
-
+.logo {
+  background-image: url('./vibe-logo.png');
+  background-size: cover;
+  height: 5rem;
+  width: 6rem;
+  margin-left: 1rem;
+}
 
 .tracks{
   display: flex;
   flex-direction: column;
+  align-items: flex;
   justify-content: flex-start;
-  /* width: 50%; */
-  /* flex-wrap: wrap; */
 }
 
-#container{ 
+#container{
   display: flex;
 }

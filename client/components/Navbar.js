@@ -1,50 +1,53 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
-import { Button } from '@mui/material'
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import { Box, Button, Typography } from "@mui/material";
 
+const Navbar = ({ handleClick, isLoggedIn, username }) => {
+  return (
+    <div>
+      <nav>
+        {isLoggedIn ? (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            style={{ backgroundColor: "#000000" }}
+          >
+            <Typography variant='h5' style={{ color: "#ffffff", marginLeft: '1.5rem' }}>
+                VIBE CHECK
+              </Typography>
+            <Box display="flex" alignItems="center">
+              <Typography style={{ color: "#1DB954" }}>
+                {username.toUpperCase()}
+              </Typography>
+              <Button>
+                <a href="#" onClick={handleClick}>
+                  Logout
+                </a>
+              </Button>
+            </Box>
+          </Box>
+        ) : null}
+      </nav>
+    </div>
+  );
+};
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Button><Link to="/home">Home</Link></Button>
-          <Button>
-            <a href="#" onClick={handleClick}>
-            Logout
-            </a>
-          </Button>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Button><Link to="/login">Login</Link></Button>
-          <Button><Link to="/signup">Sign Up</Link></Button>
-          <img src='/public/logo.png'/>
-        </div>
-      )}
-    </nav>
-  </div>
-)
-
-/**
- * CONTAINER
- */
-const mapState = state => {
+const mapState = (state) => {
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!state.auth.id,
+    username: state.auth.username,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);

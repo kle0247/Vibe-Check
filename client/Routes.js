@@ -4,6 +4,7 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import {me} from './store'
+import Navbar from './components/Navbar'
 import Spotify from './components/Spotify';
 import auth from './store/auth';
 import Player from './components/SpotifyPlayer'
@@ -18,9 +19,9 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-
     return (
       <div>
+        <Navbar />
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />

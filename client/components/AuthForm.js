@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {authenticate} from '../store'
 import axios from 'axios'
+import Spline from '@splinetool/react-spline'
+import { Card, Button } from '@mui/material'
 
 
 /**
@@ -9,31 +11,21 @@ import axios from 'axios'
  */
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
+  setTimeout(() => document.dispatchEvent(new KeyboardEvent('keydown', {'key': '1'})), 1500);
+
   return (
-    <div>
+    <div style={{'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'center', 'backgroundColor':'#000000', height: '100vh'}}>
+      <div style={{'height':500, 'width': 700, 'paddingTop': '1rem' }}>
+          <Spline scene='https://prod.spline.design/vJgCWzKCOTteVe2X/scene.splinecode'/>
+      </div>
       <form onSubmit={handleSubmit} name={name}>
         <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        <div>
-          <a href='/auth/spotify'>Login via Spotify</a>
+            <Button size='large' variant='contained' style={{'display': 'flex','alignItems': 'center', 'backgroundColor': '#1DB954', 'border': 'none'}}><a href='/auth/spotify'>Login via Spotify</a></Button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
-      </form>
+      </form>      
       </div>
-  )}
+)}
 
 /**
  * CONTAINER

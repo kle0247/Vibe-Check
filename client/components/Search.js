@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { searchTracks } from '../store/tracks'
 import { analyzeAllTracks } from '../store/analyzeTracks'
+import { Box, TextField, Typography } from "@mui/material";
 
 class Search extends React.Component{
     constructor(props){
@@ -24,7 +25,9 @@ class Search extends React.Component{
     render(){
         const { searchTracks } = this
         return(
-            <input placeholder="Search tracks" onChange={ searchTracks } />
+            <Box display='flex' justifyContent='center' style={{backgroundColor: '#000000'}}>
+                <TextField  size='small'  style={{backgroundColor: '#ffffff', margin: '1rem',  borderRadius: '0.5rem', width: 500}}  label="Search tracks" onChange={ searchTracks } />
+            </Box>
         )
     }
 }

@@ -6,3 +6,7 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 env.js
+public/vendors-node_modules_splinetool_runtime_build_boolean_js.bundle.js
+public/vendors-node_modules_splinetool_runtime_build_boolean_js.bundle.js.map
+public/vendors-node_modules_splinetool_runtime_build_process_js.bundle.js
+public/vendors-node_modules_splinetool_runtime_build_process_js.bundle.js.map
